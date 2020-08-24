@@ -35,12 +35,12 @@ const randomWait = async (maxSeconds) => {
 // Request with retry (random wait between retries)
 const  request = async (options) => {
   let result
-  for(i = 0; i < 5; i++){
+  for(i = 0; i < 30; i++){
     try{
       result = await _request(options)
       break
     }catch(e){
-      await randomWait(25)
+      await randomWait(10)
     }  
   }
   return result
