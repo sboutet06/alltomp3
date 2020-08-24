@@ -3,7 +3,7 @@ const ffmpeg = require('fluent-ffmpeg');
 const path = require('path');
 const fs = require('fs-extra');
 const EventEmitter = require('events');
-const request = require('request-promise');
+const _request = require('request-promise');
 const requestNoPromise = require('request');
 const _ = require('lodash');
 const acoustid = require('acoustid');
@@ -24,6 +24,27 @@ const lcs = require('longest-common-substring');
 const API_ACOUSTID = 'lm59lNN597';
 const API_SOUNDCLOUD = 'dba290d84e6ca924414c91ac12fc3c8f';
 const API_SPOTIFY = 'ODNiZjMzMmQ4MDI1NGNlNzhkNjNkOWM2ZWM2N2M5ZTU6Mzg4OTIxY2M0ZjEyNGEwYWFjM2NiMzIzYTNiZGVlYmU=';
+
+const randomWait = async (maxSeconds) => {
+  const durationSeconds = Math.floor(Math.random() * Math.floor(maxSeconds))
+  return new Promise((resolve) => {
+    setTimeout(resolve, durationSeconds * 1000)
+  })
+}
+
+// Request with retry (random wait between retries)
+const  request = async (options) => {
+  let result
+  for(i = 0; i < 5; i++){
+    try{
+      result = await _request(options)
+      break
+    }catch(e){
+      await randomWait(25)
+    }  
+  }
+  return result
+}
 
 const at3 = {};
 
@@ -231,9 +252,9 @@ at3.isURL = (query) => {
  * @return {Promise}
  */
 at3.spotifyToken = () => {
-  return request
-    .post({
+  return request({
       uri: 'https://accounts.spotify.com/api/token',
+      method: 'POST',
       headers: {
         Authorization: 'Basic ' + API_SPOTIFY,
       },
