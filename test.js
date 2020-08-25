@@ -113,7 +113,7 @@ const util = require('util');
 // dl.on('infos', function(infos) {
 //     console.log('Got infos: ', infos);
 // });
-
+/*
 var dl = alltomp3.findAndDownload('imagine dragons on top of the world', './mp3/', function (infos) {
   console.log("It's finished: ", infos);
 });
@@ -139,7 +139,7 @@ dl.on('convert-end', function () {
 dl.on('infos', function (infos) {
   console.log('New infos received: ', infos);
 });
-
+*/
 // alltomp3.guessTrackFromString('Imagine Dragons - On Top of the World - Lyrics').then(function(infos) {
 //     console.log(infos);
 // });
@@ -209,3 +209,7 @@ dl.on('infos', function (infos) {
 // dl.on('end-url', function(index) {
 //     console.log('End: ', index);
 // });
+
+var dl = alltomp3.findAndDownload('yall hundred miles', './mp3/', function (infos) {
+  console.log("It's finished: ", infos);
+});

@@ -1380,10 +1380,10 @@ at3.findBestVideo = (song, videos, v) => {
   const score = (song, video, largestRealLike, largestViews) => {
     // weight of each argument
     let weights = {
-      title: 30,
+      title: 0,
       hd: 0.3,
       duration: 20,
-      views: 10,
+      views: 30,
       realLike: 15,
     };
 
